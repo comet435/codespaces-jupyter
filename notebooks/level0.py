@@ -27,13 +27,12 @@ def decrypt(text, shift):
             result += char
     return result
 
-# 파일 암호화 함수 (대용량 파일 처리 대비)
+# 파일 암호화 함수 (파일 전체 처리)
 def encrypt_file(input_file, shift):
     try:
         with open(input_file, 'r', encoding='utf-8') as f:
-            encrypted_text = ""
-            for chunk in tqdm(f, desc="파일 암호화 진행 중"):
-                encrypted_text += encrypt(chunk, shift)
+            text = f.read()  # 파일 전체 읽기
+            encrypted_text = encrypt(text, shift)  # 전체 텍스트 암호화
 
         file_dir = os.path.dirname(input_file)
         output_file = os.path.join(file_dir, f"encrypted_{os.path.basename(input_file)}")
@@ -52,13 +51,12 @@ def encrypt_file(input_file, shift):
     except Exception as e:
         print(f"파일 암호화 중 오류 발생: {e}")
 
-# 파일 복호화 함수 (대용량 파일 처리 대비)
+# 파일 복호화 함수 (파일 전체 처리)
 def decrypt_file(input_file, shift):
     try:
         with open(input_file, 'r', encoding='utf-8') as f:
-            decrypted_text = ""
-            for chunk in tqdm(f, desc="파일 복호화 진행 중"):
-                decrypted_text += decrypt(chunk, shift)
+            text = f.read()  # 파일 전체 읽기
+            decrypted_text = decrypt(text, shift)  # 전체 텍스트 복호화
 
         file_dir = os.path.dirname(input_file)
         output_file = os.path.join(file_dir, f"decrypted_{os.path.basename(input_file)}")
